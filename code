@@ -29,7 +29,7 @@ CrossTable(loan_data$grade,loan_data$loan_status,prop.r=TRUE,prop.t=FALSE,prop.c
 
 
 
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/master/images/Screen%20Shot%202016-09-08%20at%207.04.31%20PM.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img1.png
 
 ```
 hist_1$breaks
@@ -45,12 +45,12 @@ hist_2 <- hist(loan_data$loan_amnt, breaks = 200, xlab = "Loan amount",
 main = "Histogram of the loan amount",col="beige")
 ```
 
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/64f49c469ec6587465cbb3f381dea18126817875/images/img2.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img2.png
 
 ```
 plot(loan_data$age,ylab="Age")
 ```
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/master/images/img3.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img3.png
 
 In the above image we see that there is an outlier with age>140. In the next
 step we remove that outlier.
@@ -61,12 +61,12 @@ index_highage=which(loan_data$age>122)
  plot(loan_data$age, loan_data$annual_inc, xlab = "Age", ylab = "Annual Income")
  ```
 
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/master/images/img4.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img4.png
 
 ```
 plot(new_data$age, new_data$annual_inc, xlab = "Age", ylab = "Annual Income")
 ```
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/master/images/img5.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img5.png
 
 ```
 loan_data=new_data
@@ -113,7 +113,7 @@ loan_data$int_rate=NULL
 log_model_full=glm(loan_status~.,family="binomial",data=training_set)
 summary(log_model_full)
 ```
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/master/images/img7.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img7.png
 
 ```
 range(predictions_all_full)
@@ -126,7 +126,7 @@ conf = table(test_set$loan_status,pred_cutoff_15)
 conf
 
 ```
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/master/images/img8.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img8.png
 
 ```
 acc <- sum(diag(conf)) / nrow(test_set)
@@ -157,7 +157,7 @@ acc_d<- sum(diag(conf_d)) / nrow(test_set)
 tree_weights <- rpart(loan_status ~ ., method = "class", data =training_set,parms = list(prior=c(0.7,0.3)), control = rpart.control(cp = 0.001659))
 plotcp(tree_weights)
 ```
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/master/images/img9.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img9.png
 
 ```
 pred_1 <- predict(tree_weights,newdata=test_set,type="class")
@@ -170,10 +170,10 @@ acc_d1
 ```
 rpart.plot(tree_weights)
 ```
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/master/images/img10.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img10.png
 ```
 fancyRpartPlot(tree_weights)
 
 ```
 
-https://github.com/anagar20/Predicting-Voting-Outcomes-Kaggle-/blob/master/images/img11.png
+https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img11.png
