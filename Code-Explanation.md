@@ -1,8 +1,9 @@
-##Loading the Data
+#1) LOADING THE DATA
 
     loan_data = readRDS("loandata.rds")
     library(gmodels)
 
+#2) PREPARING THE DATA FOR EVALUATION
 ##Number and Percent of defaulted and non defaulted loans
 
     CrossTable(loan_data$loan_status)
@@ -57,14 +58,7 @@ In the above image we see that there is an outlier with age>140. In the next ste
      loan_data_replace$int_rate[na_index] <- median_ir
      summary(loan_data_replace$int_rate)
 
-##Splitting the data set into training set and test set
-
-     set.seed(567)
-    index_train=sample(1:nrow(loan_data),2/3* nrow(loan_data))
-    training_set <- loan_data[index_train, ]
-    test_set = loan_data[-index_train, ]
-
-##coarse classification
+###coarse classification
 
     loan_data$emp_cat <- rep(NA, length(loan_data$emp_length))
     loan_data$emp_cat[which(loan_data$emp_length <= 15)] <- "0-15"
@@ -84,16 +78,32 @@ In the above image we see that there is an outlier with age>140. In the next ste
     loan_data$ir_cat[which(is.na(loan_data$int_rate))] <- "Missing"
     loan_data$ir_cat <- as.factor(loan_data$ir_cat)
     loan_data$int_rate=NULL
+    
+    
+#3) PREDICTION
+##Splitting the data set into training set and test set
+
+     set.seed(567)
+    index_train=sample(1:nrow(loan_data),2/3* nrow(loan_data))
+    training_set <- loan_data[index_train, ]
+    test_set = loan_data[-index_train, ]
 
 
+
+##Predction Model
     log_model_full=glm(loan_status~.,family="binomial",data=training_set)
     summary(log_model_full)
 
 ![](https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img7.png)
+##Predction
 
+    predictions_all_full=predict(log_model_full,newdata=test_set,type="response")
     range(predictions_all_full)
-[1] 8.369797e-06 5.141640e-01
+    
+[1] 8.335312e-06 5.138435e-01
 
+ ###a) using threshold = 0.15
+ 
     pred_cutoff_15=ifelse(predictions_all_full>0.15,1,0)
     conf = table(test_set$loan_status,pred_cutoff_15)
     conf
@@ -103,6 +113,19 @@ In the above image we see that there is an outlier with age>140. In the next ste
     acc <- sum(diag(conf)) / nrow(test_set)
     acc
 [1] 0.7364133 ACCURACY
+
+
+###b) using threshold = 0.49
+
+    pred_cutoff_15=ifelse(predictions_all_full>0.52,1,0)
+    conf = table(test_set$loan_status,pred_cutoff_15)
+    conf
+    
+![](https://github.com/anagar20/Credit-Risk-Modeling/blob/master/images/img14.png)
+
+    acc <- sum(diag(conf)) / nrow(test_set)
+    acc
+0.8930597 ACCURACY
 
 ##USING DECISION TREES FOR PREDICTION
 
