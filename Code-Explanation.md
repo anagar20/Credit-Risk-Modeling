@@ -1,4 +1,4 @@
-Loading the Data
+##Loading the Data
 
     loan_data = readRDS("loandata.rds")
     library(gmodels)
