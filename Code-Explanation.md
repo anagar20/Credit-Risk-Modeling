@@ -117,7 +117,7 @@ In the above image we see that there is an outlier with age>140. In the next ste
 
 ###b) using threshold = 0.49
 
-    pred_cutoff_15=ifelse(predictions_all_full>0.52,1,0)
+    pred_cutoff_15=ifelse(predictions_all_full>0.49,1,0)
     conf = table(test_set$loan_status,pred_cutoff_15)
     conf
     
